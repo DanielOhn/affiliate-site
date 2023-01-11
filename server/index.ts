@@ -65,3 +65,5 @@ app.delete('/posts/:post_id', async (req: any, res: any) => {
 app.listen(port, () => {
     console.log(`Running server on http://localhost:${port}`)
 })
+
+export default app
