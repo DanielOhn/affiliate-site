@@ -9,7 +9,7 @@ function App() {
             <h1>Posts</h1>
             <p>Creating posts</p>
 
-            {/* <InputPost /> */}
+            <InputPost />
             {/* <ListPosts /> */}
             <footer>
                 <div>Footer Goes Here</div>

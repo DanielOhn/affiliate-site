@@ -16,7 +16,7 @@ const ListPosts = () => {
 
     const getPosts = async () => {
         try {
-            const res = await fetch('/posts')
+            const res = await fetch('/blogs')
             const data = await res.json()
 
             setPostsData(data)
