@@ -1,7 +1,9 @@
 import './App.css'
 
-import InputPost from '../posts/InputPost'
-import ListPosts from '../posts/ListPosts'
+import InputBlog from '../blogs/InputBlog'
+import ListBlog from '../blogs/ListBlog'
+import InputUser from './users/InputUsers'
+import Login from './users/Login'
 
 function App() {
     return (
@@ -9,8 +11,13 @@ function App() {
             <h1>Posts</h1>
             <p>Creating posts</p>
 
-            <InputPost />
-            {/* <ListPosts /> */}
+            <InputBlog />
+            <ListBlog />
+            <hr />
+
+            <InputUser />
+            <Login />
+
             <footer>
                 <div>Footer Goes Here</div>
             </footer>

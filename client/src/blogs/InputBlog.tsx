@@ -1,6 +1,6 @@
 import { useState, SyntheticEvent } from 'react'
 
-const InputPost = () => {
+const InputBlog = () => {
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
 
@@ -10,13 +10,13 @@ const InputPost = () => {
         try {
             const body = { title, text }
 
-            const addPost = await fetch('/blog', {
+            const addBlog = await fetch('/api/blog', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             })
 
-            console.log(addPost)
+            console.log(addBlog)
 
             window.location.assign('/')
         } catch (err) {
@@ -26,7 +26,7 @@ const InputPost = () => {
 
     return (
         <>
-            <h4>Input Post</h4>
+            <h4>Input Blog</h4>
             <form onSubmit={onSubmit}>
                 <input
                     type="text"
@@ -46,4 +46,4 @@ const InputPost = () => {
     )
 }
 
-export default InputPost
+export default InputBlog
