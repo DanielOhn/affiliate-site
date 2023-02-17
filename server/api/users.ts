@@ -2,6 +2,7 @@ import pool from '../database'
 import * as express from 'express'
 
 const router = express.Router()
+const bcrypt = require('bcrypt')
 
 router
     .route(`/users`)
@@ -9,15 +10,20 @@ router
     .post(async (req: any, res: any) => {
         try {
             const { username, email, password } = req.body
-            // psedocode MAKE SURE TO UPDATE TO ACTUAL CODE
-            const encryptedPassword = password.encrypt()
 
-            const newUser = await pool.query(
-                `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *`,
-                [username, email, encryptedPassword]
-            )
+            const time = await pool.query(`SELECT NOW()`)
+            const created = time.rows[0].now
 
-            res.json(newUser.rows[0])
+            const admin = false
+
+            bcrypt.hash(password, 10, async (err: any, hash: any) => {
+                const newUser = await pool.query(
+                    `INSERT INTO users (username, email, password, created, admin) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+                    [username, email, hash, created, admin]
+                )
+
+                res.json(newUser.rows[0])
+            })
         } catch (err) {
             console.error(err)
         }
@@ -31,6 +37,35 @@ router
             console.log(err)
         }
     })
+
+router.route(`/login`).post(async (req: any, res: any) => {
+    try {
+        const { username, password } = req.body
+
+        if (username !== '' && password !== '') {
+            const getUser = await pool.query(
+                `SELECT * FROM users WHERE username = $1`,
+                [username]
+            )
+
+            console.log(getUser.rows[0])
+            const checkValid = await bcrypt.compare(
+                password,
+                getUser.rows[0].password
+            )
+
+            if (checkValid) {
+                // SIGN USER IN !!!
+            } else {
+                console.log('Invalid Login')
+            }
+        } else {
+            console.log('Please enter a valid username and password')
+        }
+    } catch (err) {
+        console.error(err)
+    }
+})
 
 // GET user
 router
