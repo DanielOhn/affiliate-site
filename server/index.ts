@@ -6,8 +6,14 @@ const port = 8000
 const cors = require('cors')
 const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
+const passport = require('passport')
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+app.use(
+    cors({
+        origin: 'http://localhost:3000', // Allow server to accept request from different origin
+        credentials: true,
+    })
+)
 
 const blog = require('./api/blog')
 const items = require('./api/items')
@@ -15,10 +21,7 @@ const users = require('./api/users')
 
 app.use(express.json())
 
-app.use('/api', blog)
-app.use('/api', items)
-app.use('/api', users)
-
+// CREATES A SESSION WHEN THE USER GOES ON THE LOCALHOST:8000
 app.use(
     session({
         secret: process.env.SECRET_KEY,
@@ -28,16 +31,32 @@ app.use(
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+            secure: false, // should be true on production, requires https
         },
-        resave: false,
+        resave: true,
         saveUninitialized: true,
+        rolling: true, // resets the max age
     })
 )
 
-app.get('/', (res: any, req: any) => {
-    res.json('Session init')
+// Passport Init
+require('./passport')
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use((req: any, res: any, next: any) => {
+    console.log(req.session)
+    console.log(req.user)
+    next()
 })
 
+// Importing Routes
+app.use('/api', blog)
+app.use('/api', items)
+app.use('/api', users)
+
+// Starts server
 app.listen(port, () => {
     console.log(`Running server on http://localhost:${port}`)
 })

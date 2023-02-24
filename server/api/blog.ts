@@ -7,7 +7,7 @@ const router = express.Router()
 router.route('/blog').post(async (req: any, res: any) => {
     try {
         const { title, content } = req.body
-        const author = 1
+        const author = 5
 
         const time = await pool.query(`SELECT NOW()`)
         const created = time.rows[0].now

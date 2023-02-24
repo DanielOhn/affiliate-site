@@ -3,6 +3,7 @@ import * as express from 'express'
 
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const passport = require('passport')
 
 router
     .route(`/users`)
@@ -38,34 +39,14 @@ router
         }
     })
 
-router.route(`/login`).post(async (req: any, res: any) => {
-    try {
-        const { username, password } = req.body
-
-        if (username !== '' && password !== '') {
-            const getUser = await pool.query(
-                `SELECT * FROM users WHERE username = $1`,
-                [username]
-            )
-
-            console.log(getUser.rows[0])
-            const checkValid = await bcrypt.compare(
-                password,
-                getUser.rows[0].password
-            )
-
-            if (checkValid) {
-                // SIGN USER IN !!!
-            } else {
-                console.log('Invalid Login')
-            }
-        } else {
-            console.log('Please enter a valid username and password')
-        }
-    } catch (err) {
-        console.error(err)
-    }
-})
+router
+    .route(`/login`)
+    .post(
+        passport.authenticate('local', {
+            failureRedirection: '',
+            successRedirect: '/',
+        })
+    )
 
 // GET user
 router
