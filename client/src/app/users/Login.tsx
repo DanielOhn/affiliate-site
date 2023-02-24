@@ -30,11 +30,13 @@ const Login = () => {
                     type="text"
                     value={username}
                     placeholder="username"
+                    name="username"
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <input
                     type="password"
                     value={password}
+                    name="password"
                     placeholder="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />

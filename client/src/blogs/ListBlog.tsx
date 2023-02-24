@@ -56,7 +56,7 @@ const ListBlog = () => {
                 method: 'DELETE',
             })
             console.log(deleteBlog)
-            setBlogsData(blogsData.filter((blog: any) => blog.author !== id))
+            setBlogsData(blogsData.filter((blog: any) => blog.blog_id !== id))
         } catch (err) {
             console.error(err)
         }

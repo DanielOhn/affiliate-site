@@ -2,13 +2,13 @@ import { useState, SyntheticEvent } from 'react'
 
 const InputBlog = () => {
     const [title, setTitle] = useState('')
-    const [text, setText] = useState('')
+    const [content, setContent] = useState('')
 
     const onSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
 
         try {
-            const body = { title, text }
+            const body = { title, content }
 
             const addBlog = await fetch('/api/blog', {
                 method: 'POST',
@@ -36,8 +36,8 @@ const InputBlog = () => {
                 <br />
                 <input
                     type="text"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                 />
                 <br />
                 <button>Add</button>

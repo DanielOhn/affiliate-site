@@ -6,6 +6,12 @@ import InputUser from './users/InputUsers'
 import Login from './users/Login'
 
 function App() {
+    const Session = async () => {
+        const sess = await fetch('/')
+    }
+
+    Session()
+
     return (
         <div className="App">
             <h1>Posts</h1>
