@@ -44,14 +44,14 @@ const InputUser = () => {
                     value={email}
                     placeholder="email"
                     onChange={(e) => setEmail(e.target.value)}
-                />{' '}
+                />
                 <input
                     type="password"
                     value={password}
                     placeholder="password"
                     name="password"
                     onChange={(e) => setPassword(e.target.value)}
-                />{' '}
+                />
                 <input
                     type="password"
                     value={password2}

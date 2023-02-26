@@ -1,4 +1,5 @@
 import { useState, SyntheticEvent } from 'react'
+import { Outlet } from 'react-router-dom'
 
 const Login = () => {
     const [username, setUsername] = useState('')
