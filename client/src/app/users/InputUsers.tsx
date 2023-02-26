@@ -36,6 +36,7 @@ const InputUser = () => {
                     type="text"
                     value={username}
                     placeholder="username"
+                    name="username"
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <input
@@ -48,6 +49,7 @@ const InputUser = () => {
                     type="password"
                     value={password}
                     placeholder="password"
+                    name="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />{' '}
                 <input

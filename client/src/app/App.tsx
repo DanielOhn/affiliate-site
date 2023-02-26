@@ -7,7 +7,9 @@ import Login from './users/Login'
 
 function App() {
     const Session = async () => {
-        const sess = await fetch('/')
+        const sess = await fetch('/api/profile')
+
+        console.log('Session: ' + JSON.stringify(sess))
     }
 
     Session()
