@@ -46,8 +46,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use((req: any, res: any, next: any) => {
-    console.log(req.session)
-    console.log(req.user)
+    if (req.user) {
+        console.log(req.user)
+    } else {
+        console.log('User is not logged in')
+    }
     next()
 })
 

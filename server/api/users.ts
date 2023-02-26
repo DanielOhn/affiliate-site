@@ -39,14 +39,35 @@ router
         }
     })
 
-router
-    .route(`/login`)
-    .post(
-        passport.authenticate('local', {
-            failureRedirection: '',
-            successRedirect: '/',
-        })
-    )
+router.route(`/login`).post(
+    passport.authenticate('local', {
+        failureRedirection: '/login-failed',
+        successRedirect: '/login-success',
+    })
+)
+
+router.route('/logout').get((req: any, res: any, next: any) => {
+    req.logout((err: any) => {
+        if (err) {
+            return next(err)
+        }
+    })
+})
+
+router.route('/profile').get((req: any, res: any) => {
+    if (req.user) {
+        res.json(req.user)
+    }
+})
+
+router.route('/login-failed').get((req: any, res: any, next: any) => {
+    req.logout()
+    res.redirect('/login')
+})
+
+router.route('/login-success').get((req: any, res: any, next: any) => {
+    res.redirect('/')
+})
 
 // GET user
 router
