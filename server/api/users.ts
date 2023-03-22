@@ -62,6 +62,7 @@ router.route('/profile').get((req: any, res: any) => {
 
 router.route('/login-failed').get((req: any, res: any, next: any) => {
     req.logout()
+    console.log('Login Session Failed')
     res.redirect('/login')
 })
 

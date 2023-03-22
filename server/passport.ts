@@ -9,6 +9,7 @@ passport.serializeUser((user: any, callback: any) => {
         return callback(null, {
             id: user.id,
             username: user.username,
+            admin: user.admin,
         })
     })
 })
