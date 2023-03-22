@@ -10,17 +10,19 @@ import Logout from './users/Logout'
 
 function App() {
     const [user, setUser] = useState('')
+    const [admin, setAdmin] = useState(false)
 
     const Session = async () => {
         const sess = await fetch('/api/profile')
         const data = await sess.json()
 
         setUser(data.username)
+        setAdmin(data.admin)
     }
 
     useEffect(() => {
         Session()
-    }, [user])
+    }, [])
 
     const Layout = () => {
         return (
@@ -45,10 +47,17 @@ function App() {
                                 </li>
                             </>
                         )}
+                        {admin && user ? (
+                            <li>
+                                <Link to="/create-blog">Create Blog</Link>
+                            </li>
+                        ) : (
+                            <br />
+                        )}
                     </ul>
                 </nav>
 
-                <Outlet />
+                <Outlet context={{ username: user, admin: admin }} />
             </div>
         )
     }
@@ -56,15 +65,15 @@ function App() {
     return (
         <div className="App">
             <h1>Posts</h1>
-            {/* <InputBlog /> */}
             <hr />
 
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<ListBlog />} />
+                <Route element={<Layout />}>
+                    <Route path="/" element={<ListBlog />} />
                     <Route path="logout" element={<Logout />} />
                     <Route path="register" element={<InputUser />} />
                     <Route path="login" element={<Login />} />
+                    <Route path="create-blog" element={<InputBlog />} />
                 </Route>
             </Routes>
         </div>

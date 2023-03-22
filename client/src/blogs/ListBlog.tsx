@@ -1,4 +1,6 @@
 import { useState, useEffect, SyntheticEvent } from 'react'
+import { useOutletContext } from 'react-router-dom'
+
 // Interface is only for Object/Classes
 
 interface Blog {
@@ -62,9 +64,42 @@ const ListBlog = () => {
         }
     }
 
+    const Content = (data: any) => {
+        const { blog } = data
+        let context: { user: string; admin: boolean } = useOutletContext()
+
+        if (context.admin) {
+            return (
+                <>
+                    <h4>{blog.title}</h4>
+                    <p>{blog.content}</p>
+                    <button
+                        onClick={(e: SyntheticEvent) =>
+                            deleteBlog(blog.blog_id)
+                        }>
+                        Delete
+                    </button>
+                    <button
+                        onClick={() =>
+                            editBlog(blog.blog_id, blog.title, blog.content)
+                        }>
+                        Edit
+                    </button>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <h4>{blog.title}</h4>
+                    <p>{blog.content}</p>
+                </>
+            )
+        }
+    }
+
     useEffect(() => {
         getBlogs()
-    }, [])
+    }, [blogsData])
 
     return (
         <>
@@ -100,24 +135,7 @@ const ListBlog = () => {
                         </div>
                     ) : (
                         <div key={blog.blog_id}>
-                            <h4>{blog.title}</h4>
-                            <p>{blog.content}</p>
-                            <button
-                                onClick={(e: SyntheticEvent) =>
-                                    deleteBlog(blog.blog_id)
-                                }>
-                                Delete
-                            </button>
-                            <button
-                                onClick={() =>
-                                    editBlog(
-                                        blog.blog_id,
-                                        blog.title,
-                                        blog.content
-                                    )
-                                }>
-                                Edit
-                            </button>
+                            <Content blog={blog} />
                         </div>
                     )
                 })

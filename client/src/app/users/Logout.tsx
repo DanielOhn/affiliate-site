@@ -1,17 +1,25 @@
 import { SyntheticEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Logout = () => {
-    const onClick = async (e: SyntheticEvent) => {
+    const navigate = useNavigate()
+
+    const Logout = async (e: SyntheticEvent) => {
         e.preventDefault()
 
-        const logout = await fetch('/api/logout')
+        try {
+            const logout = await fetch('/api/logout')
 
-        window.location.assign('/')
+            navigate(0)
+            navigate('/')
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
         <>
-            <button onClick={(e) => onClick(e)}>Logout</button>
+            <button onClick={(e) => Logout(e)}>Logout</button>
         </>
     )
 }

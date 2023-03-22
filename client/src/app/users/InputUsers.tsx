@@ -1,4 +1,5 @@
 import { useState, SyntheticEvent } from 'react'
+import { redirect } from 'react-router-dom'
 
 const InputUser = () => {
     const [username, setUsername] = useState('')
@@ -19,7 +20,7 @@ const InputUser = () => {
                     body: JSON.stringify(body),
                 })
 
-                window.location.assign('/')
+                return redirect('/')
             } catch (err) {
                 console.log(err)
             }

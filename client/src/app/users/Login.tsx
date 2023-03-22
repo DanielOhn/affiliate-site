@@ -1,9 +1,10 @@
 import { useState, SyntheticEvent } from 'react'
-import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
     const onSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
@@ -16,8 +17,8 @@ const Login = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             })
-
-            window.location.assign('/')
+            navigate('/')
+            navigate(0)
         } catch (err) {
             console.error(err)
         }
