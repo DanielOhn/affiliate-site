@@ -6,6 +6,8 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
+    const [loginFail, setLoginFail] = useState(false)
+
     const onSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
 
@@ -17,10 +19,18 @@ const Login = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             })
-            navigate('/')
-            navigate(0)
-        } catch (err) {
-            console.error(err)
+
+            const data: boolean = await login.json()
+
+            if (data) {
+                navigate('/')
+                navigate(0)
+            } else {
+                setLoginFail(true)
+            }
+        } catch (err: any) {
+            console.log(err)
+            setLoginFail(true)
         }
     }
 
@@ -43,6 +53,13 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
+                {loginFail ? (
+                    <div className="failed">
+                        * failed to login, please try again
+                    </div>
+                ) : (
+                    <></>
+                )}
                 <button>Login</button>
             </form>
         </>

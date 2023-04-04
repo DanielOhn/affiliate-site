@@ -42,3 +42,8 @@ footer {
 
     border: 1px red solid;
 }
+
+.failed {
+    font-size: 12px;
+    color: red;
+}
