@@ -26,22 +26,28 @@ const customFields = {
 }
 
 const verifyCallback = async (username: any, password: any, done: any) => {
+    console.log(username, password)
+
     // Find user in the database
     try {
         const user = await pool.query(
             `SELECT * FROM users WHERE username = $1`,
             [username]
         )
-        if (!user) {
+
+        if (!user || user.rows.length === 0) {
             return done(null, false)
-        }
-
-        const isValid = await bcrypt.compare(password, user.rows[0].password)
-
-        if (isValid) {
-            return done(null, user.rows[0])
         } else {
-            return done(null, false)
+            const isValid = await bcrypt.compare(
+                password,
+                user.rows[0].password
+            )
+
+            if (isValid) {
+                return done(null, user.rows[0])
+            } else {
+                return done(null, false)
+            }
         }
     } catch (err: any) {
         done(err)

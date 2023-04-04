@@ -41,8 +41,8 @@ router
 
 router.route(`/login`).post(
     passport.authenticate('local', {
-        failureRedirection: '/login-failed',
-        successRedirect: '/login-success',
+        failureRedirect: '/api/login-failed',
+        successRedirect: '/api/login-success',
     })
 )
 
@@ -51,6 +51,9 @@ router.route('/logout').get((req: any, res: any, next: any) => {
         if (err) {
             return next(err)
         }
+
+        console.log('Logged out!')
+        res.json('Logged out!')
     })
 })
 
@@ -61,13 +64,13 @@ router.route('/profile').get((req: any, res: any) => {
 })
 
 router.route('/login-failed').get((req: any, res: any, next: any) => {
-    req.logout()
-    console.log('Login Session Failed')
-    res.redirect('/login')
+    console.log('Login Failed!')
+    res.json(false)
 })
 
 router.route('/login-success').get((req: any, res: any, next: any) => {
-    res.redirect('/')
+    console.log('Login Sucess!')
+    res.json(true)
 })
 
 // GET user
