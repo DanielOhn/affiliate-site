@@ -1,6 +1,7 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, SyntheticEvent } from 'react'
 import { Routes, Route, Outlet, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import InputBlog from '../blogs/InputBlog'
 import ListBlog from '../blogs/ListBlog'
@@ -12,12 +13,27 @@ function App() {
     const [user, setUser] = useState('')
     const [admin, setAdmin] = useState(false)
 
+    const navigate = useNavigate()
+
     const Session = async () => {
         const sess = await fetch('/api/profile')
         const data = await sess.json()
 
         setUser(data.username)
         setAdmin(data.admin)
+    }
+
+    const Signout = async (e: SyntheticEvent) => {
+        e.preventDefault()
+
+        try {
+            const logout = await fetch('/api/logout')
+
+            navigate('/')
+            navigate(0)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -34,7 +50,11 @@ function App() {
                         </li>
                         {user ? (
                             <li>
-                                <Link to="/logout">Logout</Link>
+                                <a
+                                    href=""
+                                    onClick={(e: SyntheticEvent) => Signout(e)}>
+                                    Logout
+                                </a>
                             </li>
                         ) : (
                             <>
@@ -70,7 +90,7 @@ function App() {
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<ListBlog />} />
-                    <Route path="logout" element={<Logout />} />
+                    {/* <Route path="logout" element={<Logout />} /> */}
                     <Route path="register" element={<InputUser />} />
                     <Route path="login" element={<Login />} />
                     <Route path="create-blog" element={<InputBlog />} />
