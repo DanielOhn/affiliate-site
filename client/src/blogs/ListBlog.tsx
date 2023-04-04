@@ -15,7 +15,7 @@ const ListBlog = () => {
 
     let [title, setTitle] = useState('')
     let [content, setContent] = useState('')
-    let [edit, setEdit] = useState(0)
+    let [edit, setEdit] = useState(-1)
 
     const getBlogs = async () => {
         try {
@@ -32,6 +32,7 @@ const ListBlog = () => {
         setContent(_content)
         setTitle(_title)
         setEdit(id)
+        console.log(`Edit: ${edit}`)
     }
 
     const updateBlog = async (e: SyntheticEvent, id: number) => {
@@ -57,6 +58,7 @@ const ListBlog = () => {
             const deleteBlog = await fetch(`/api/blog/${id}`, {
                 method: 'DELETE',
             })
+
             console.log(deleteBlog)
             setBlogsData(blogsData.filter((blog: any) => blog.blog_id !== id))
         } catch (err) {
@@ -99,7 +101,7 @@ const ListBlog = () => {
 
     useEffect(() => {
         getBlogs()
-    }, [blogsData])
+    }, [edit])
 
     return (
         <>

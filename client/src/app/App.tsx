@@ -64,7 +64,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Posts</h1>
+            <h1>Affiliate Site</h1>
             <hr />
 
             <Routes>
