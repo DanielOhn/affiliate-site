@@ -7,7 +7,6 @@ import InputBlog from '../blogs/InputBlog'
 import ListBlog from '../blogs/ListBlog'
 import InputUser from './users/InputUsers'
 import Login from './users/Login'
-import Logout from './users/Logout'
 
 function App() {
     const [user, setUser] = useState('')
@@ -43,7 +42,7 @@ function App() {
     const Layout = () => {
         return (
             <div>
-                <nav>
+                <nav className="navbar">
                     <ul>
                         <li>
                             <Link to="/">Home</Link>
@@ -85,8 +84,6 @@ function App() {
     return (
         <div className="App">
             <h1>Affiliate Site</h1>
-            <hr />
-
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<ListBlog />} />

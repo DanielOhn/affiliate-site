@@ -1,6 +1,8 @@
 import { useState, SyntheticEvent } from 'react'
 import { redirect } from 'react-router-dom'
 
+import './Form.css'
+
 const InputUser = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -31,8 +33,8 @@ const InputUser = () => {
 
     return (
         <>
-            <h4>Input User</h4>
-            <form onSubmit={onSubmit}>
+            <h4 className="page-name">Input User</h4>
+            <form onSubmit={onSubmit} className="form">
                 <input
                     type="text"
                     value={username}

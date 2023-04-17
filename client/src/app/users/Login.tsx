@@ -1,6 +1,8 @@
 import { useState, SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import './Form.css'
+
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -36,8 +38,8 @@ const Login = () => {
 
     return (
         <>
-            <h4>Login</h4>
-            <form onSubmit={onSubmit}>
+            <h4 className="page-name">Login</h4>
+            <form onSubmit={onSubmit} className="form">
                 <input
                     type="text"
                     value={username}

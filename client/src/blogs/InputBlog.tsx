@@ -26,17 +26,19 @@ const InputBlog = () => {
 
     return (
         <>
-            <h4>Input Blog</h4>
-            <form onSubmit={onSubmit}>
+            <h4 className="page-name">Input Blog</h4>
+            <form onSubmit={onSubmit} className="form">
                 <input
                     type="text"
                     value={title}
+                    placeholder="title"
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <br />
                 <input
                     type="text"
                     value={content}
+                    placeholder="content"
                     onChange={(e) => setContent(e.target.value)}
                 />
                 <br />

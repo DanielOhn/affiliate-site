@@ -3,6 +3,9 @@ import { useOutletContext } from 'react-router-dom'
 
 // Interface is only for Object/Classes
 
+import './Blog.css'
+import '../app/users/Form.css'
+
 interface Blog {
     blog_id: number
     text: string
@@ -73,15 +76,17 @@ const ListBlog = () => {
         if (context.admin) {
             return (
                 <>
-                    <h4>{blog.title}</h4>
-                    <p>{blog.content}</p>
+                    <h4 className="title">{blog.title}</h4>
+                    <p className="content">{blog.content}</p>
                     <button
+                        className="btn"
                         onClick={(e: SyntheticEvent) =>
                             deleteBlog(blog.blog_id)
                         }>
                         Delete
                     </button>
                     <button
+                        className="btn"
                         onClick={() =>
                             editBlog(blog.blog_id, blog.title, blog.content)
                         }>
@@ -92,8 +97,8 @@ const ListBlog = () => {
         } else {
             return (
                 <>
-                    <h4>{blog.title}</h4>
-                    <p>{blog.content}</p>
+                    <h4 className="title">{blog.title}</h4>
+                    <p className="content">{blog.content}</p>
                 </>
             )
         }
@@ -105,11 +110,11 @@ const ListBlog = () => {
 
     return (
         <>
-            <h4>List Blogs</h4>
+            <h4 className="page-name">List Blogs</h4>
             {blogsData ? (
                 blogsData.map((blog: any) => {
                     return edit === blog.blog_id ? (
-                        <div key={blog.blog_id}>
+                        <div className="blog edit" key={blog.blog_id}>
                             <input
                                 type="text"
                                 value={title}
@@ -122,27 +127,29 @@ const ListBlog = () => {
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => setContent(e.target.value)}></input>
-                            <button
-                                onClick={(e: SyntheticEvent) =>
-                                    deleteBlog(blog.blog_id)
-                                }>
-                                Delete
-                            </button>
-                            <button
-                                onClick={(e: SyntheticEvent) =>
-                                    updateBlog(e, blog.blog_id)
-                                }>
-                                Save
-                            </button>
+                            <div className="btns">
+                                <button
+                                    onClick={(e: SyntheticEvent) =>
+                                        deleteBlog(blog.blog_id)
+                                    }>
+                                    Delete
+                                </button>
+                                <button
+                                    onClick={(e: SyntheticEvent) =>
+                                        updateBlog(e, blog.blog_id)
+                                    }>
+                                    Save
+                                </button>
+                            </div>
                         </div>
                     ) : (
-                        <div key={blog.blog_id}>
+                        <div className="blog" key={blog.blog_id}>
                             <Content blog={blog} />
                         </div>
                     )
                 })
             ) : (
-                <p>No blogs</p>
+                <p className="sadge">No blogs</p>
             )}
         </>
     )
